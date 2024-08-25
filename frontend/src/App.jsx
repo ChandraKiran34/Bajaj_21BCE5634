@@ -13,7 +13,7 @@ const App = () => {
 
     const handleJsonSubmit = async (jsonData) => {
         try {
-            const res = await fetch('http://localhost:3000/bfhl', {
+            const res = await fetch('https://bajaj-21bce5634.onrender.com/bfhl', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
