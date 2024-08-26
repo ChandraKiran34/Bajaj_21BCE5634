@@ -22,6 +22,7 @@ const App = () => {
                     'Content-Type': 'application/json',
                 },
                 body: JSON.stringify(jsonData),
+                credentials: 'include' // Add this line
             });
             console.log("hello hello")
             const data = await res.json();
