@@ -3,7 +3,14 @@ const cors = require('cors');
 
 const app = express();
 app.use(express.json());
-app.use(cors());
+
+const allowedOrigins = ['https://bajaj-21-bce-5634.vercel.app'];
+
+app.use(cors({
+  origin: allowedOrigins,
+  methods: ['GET', 'POST'],
+  credentials: true // This allows credentials to be included in requests
+}));
 
 app
   .route("/bfhl")
