@@ -11,8 +11,11 @@ const App = () => {
         document.title = '21BCE5634'; // Replace with your roll number
     }, []);
 
+    // https://bajaj-21bce5634.onrender.com/bfhl
+
     const handleJsonSubmit = async (jsonData) => {
         try {
+            console.log("hello 1", jsonData)
             const res = await fetch('https://bajaj-21bce5634.onrender.com/bfhl', {
                 method: 'POST',
                 headers: {
@@ -20,6 +23,7 @@ const App = () => {
                 },
                 body: JSON.stringify(jsonData),
             });
+            console.log("hello hello")
             const data = await res.json();
             console.log(data);
             setResponse(data);

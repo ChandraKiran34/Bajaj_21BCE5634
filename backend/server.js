@@ -11,20 +11,8 @@ app
     res.status(200).json({ operation_code: 1 });
   })
   .post((req, res) => {
-    let data = req.body.data || "";
-
-    // Sanitize input: Replace curly quotes with straight quotes
-    data = data.replace(/[“”]/g, '"').replace(/[‘’]/g, "'");
-
-    // Convert string to array
-    try {
-      data = JSON.parse(data);
-    } catch (error) {
-      return res.status(400).json({
-        is_success: false,
-        message: "Invalid input format. Please provide a valid JSON array.",
-      });
-    }
+    let data = req.body.data || [];
+    console.log("hello call");
 
     const numbers = [];
     const alphabets = [];
@@ -32,27 +20,34 @@ app
 
     // Process the array to separate numbers and alphabets
     for (const item of data) {
-      if (!isNaN(item)) {
-        numbers.push(item.toString()); // convert number to string
-      } else if (item.length === 1 && isNaN(item)) {
-        alphabets.push(item);
-        if (
-          !highest_lowercase_alphabet ||
-          item.toLowerCase() > highest_lowercase_alphabet.toLowerCase()
-        ) {
-          highest_lowercase_alphabet = item.toLowerCase();
+      const itemAsString = item.toString();
+      
+      // Check if item is a numeric string and convert to number if it is
+      if (!isNaN(itemAsString) && itemAsString.trim() !== "") {
+        numbers.push(itemAsString); // Keep it as a string in your response
+      } else if (typeof itemAsString === 'string' && itemAsString.length === 1) {
+        alphabets.push(itemAsString);
+        // Check if the character is a lowercase letter
+        if (itemAsString >= 'a' && itemAsString <= 'z') {
+          // Update highest lowercase alphabet if the current one has a higher ASCII value
+          if (
+            highest_lowercase_alphabet === "" ||
+            itemAsString > highest_lowercase_alphabet
+          ) {
+            highest_lowercase_alphabet = itemAsString;
+          }
         }
       }
     }
 
     res.json({
       is_success: true,
-      user_id: " DORADLA PARDHA SARADHI RAJU",
+      user_id: "DORADLA PARDHA SARADHI RAJU",
       email: "pardha.saradhiraju2021@vitstudent.ac.in",
       roll_number: "21BCE5634",
       numbers: numbers,
       alphabets: alphabets,
-      highest_lowercase_alphabet: [highest_lowercase_alphabet],
+      highest_lowercase_alphabet: highest_lowercase_alphabet, // return as string
     });
   });
 
